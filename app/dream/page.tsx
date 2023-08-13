@@ -18,11 +18,8 @@ import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
 
 // Configuration for the uploader
 const uploader = Uploader({
-  apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    : "free",
+  apiKey: process.env.NEXT_PUBLIC_UPLOAD_API_KEY ?? "free",
 });
-
 const options = {
   maxFileCount: 1,
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
