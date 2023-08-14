@@ -14,6 +14,7 @@ import Toggle from "../../components/Toggle";
 import appendNewToName from "../../utils/appendNewToName";
 import downloadPhoto from "../../utils/downloadPhoto";
 import DropDown from "../../components/DropDown";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
 
 // Configuration for the uploader
@@ -51,6 +52,7 @@ export default function DreamPage() {
   const [photoName, setPhotoName] = useState<string | null>(null);
   const [theme, setTheme] = useState<themeType>("Modern");
   const [room, setRoom] = useState<roomType>("Living Room");
+  const { data: session, status } = useSession();
 
   const UploadDropZone = () => (
     <UploadDropzone
@@ -100,7 +102,7 @@ export default function DreamPage() {
         <ResizablePanel>
           <AnimatePresence mode="wait">
             <motion.div className="flex justify-between items-center w-full flex-col mt-4">
-              {!restoredImage && (
+              {!restoredImage && status == "authenticated" && (
                 <>
                   <div className="space-y-4 w-full max-w-sm">
                     <div className="flex mt-3 items-center space-x-3">
@@ -178,7 +180,30 @@ export default function DreamPage() {
                   restored={restoredImage!}
                 />
               )}
-              {!originalPhoto && <UploadDropZone />}
+              {status === "authenticated" && !originalPhoto && (
+                <UploadDropZone />
+              )}
+              {status === "unauthenticated" && !originalPhoto && (
+                <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px] -mt-8">
+                  <div className="max-w-xl text-gray-600">
+                    Sign in below with Google to create a free account and
+                    restore your photos today. You will be able to restore 5
+                    photos per day for free.
+                  </div>
+                  <button
+                    onClick={() => signIn("google")}
+                    className="bg-gray-200 text-black font-semibold py-3 px-6 rounded-2xl flex items-center space-x-2"
+                  >
+                    <Image
+                      src="/google.png"
+                      width={20}
+                      height={20}
+                      alt="google's logo"
+                    />
+                    <span>Sign in with Google</span>
+                  </button>
+                </div>
+              )}
               {originalPhoto && !restoredImage && (
                 <Image
                   alt="original photo"
