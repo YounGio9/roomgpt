@@ -117,7 +117,8 @@ export default function DreamPage() {
       >
         <div className="w-[-webkit-fill-available] px-3 md:mt-8 mt-0">
           <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-100 sm:text-6xl mb-5">
-            Redesign your <span className="text-blue-600">room</span> in seconds
+            Redesign your <span className="text-[#FFCF45]">room</span> in
+            seconds
           </h1>
           {restoredImage && originalPhoto && !sideBySide && (
             <div className="sm:mt-0 mt-8">
@@ -305,7 +306,7 @@ export default function DreamPage() {
               {loading && (
                 <button
                   disabled
-                  className="bg-blue-500 rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 w-40"
+                  className="bg-[#FFCF45] rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 w-40"
                 >
                   <span className="pt-4">
                     <LoadingDots color="white" style="large" />
@@ -329,7 +330,7 @@ export default function DreamPage() {
                       setRestoredLoaded(false);
                       setError(null);
                     }}
-                    className="bg-blue-500 rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-blue-500/80 transition"
+                    className="bg-[#FFCF45] rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-[#FFCF45]/80 transition"
                   >
                     Generate New Room
                   </button>

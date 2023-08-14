@@ -16,11 +16,11 @@ export default function HomePage() {
           className="border border-gray-700 rounded-lg py-2 px-4 text-gray-400 text-sm mb-5 transition duration-300 ease-in-out"
         >
           Clone and deploy your own with{" "}
-          <span className="text-blue-600">Vercel</span>
+          <span className="text-[#FFCF45]">Vercel</span>
         </a>
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-gray-300 sm:text-7xl">
           Generating dream rooms{" "}
-          <span className="relative whitespace-nowrap text-blue-600">
+          <span className="relative whitespace-nowrap text-[#FFCF45]">
             <SquigglyLines />
             <span className="relative">using AI</span>
           </span>{" "}
@@ -31,7 +31,7 @@ export default function HomePage() {
           themes. 100% free – remodel your room today.
         </h2>
         <Link
-          className="bg-blue-600 rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-blue-500 transition"
+          className="bg-[#FFCF45] rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-[#FFCF45] transition"
           href="/dream"
         >
           Generate your dream room
