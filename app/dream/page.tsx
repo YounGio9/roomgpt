@@ -92,16 +92,53 @@ export default function DreamPage() {
     }, 1300);
   }
 
+  const [selectedRooms, setSetselectedRooms] = useState<string[]>([]);
+
+  const toggleSelectRoom = (room: themeType) => {
+    if (selectedRooms.includes(room)) {
+      setSetselectedRooms((prev) =>
+        prev.filter((actualRoom) => actualRoom !== room)
+      );
+    } else {
+      setSetselectedRooms((prev) => [room]);
+      setTheme(room);
+    }
+  };
+
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
-      <Header />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
-        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-100 sm:text-6xl mb-5">
-          Generate your <span className="text-blue-600">dream</span> room
-        </h1>
+      <Header photo={session?.user?.image || undefined} />
+      <main
+        className={`flex ${
+          status === "authenticated"
+            ? "flex-row-reverse"
+            : "flex-col  items-center"
+        }  flex-1 w-full  justify-center text-center px-4 mt-4 sm:mb-0 mb-8`}
+      >
+        <div className="w-[-webkit-fill-available] px-3 md:mt-8 mt-0">
+          <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-100 sm:text-6xl mb-5">
+            Redesign your <span className="text-blue-600">room</span> in seconds
+          </h1>
+          {restoredImage && originalPhoto && !sideBySide && (
+            <div className="sm:mt-0 mt-8">
+              <h2 className="mb-1 font-medium text-lg">Generated Room</h2>
+              <a href={restoredImage} target="_blank" rel="noreferrer">
+                <Image
+                  alt="restored photo"
+                  src={restoredImage}
+                  className="rounded-2xl relative sm:mt-0 mt-2 cursor-zoom-in w-full h-96"
+                  width={475}
+                  height={475}
+                  onLoadingComplete={() => setRestoredLoaded(true)}
+                />
+              </a>
+            </div>
+          )}
+        </div>
+
         <ResizablePanel>
           <AnimatePresence mode="wait">
-            <motion.div className="flex justify-between items-center w-full flex-col mt-4">
+            <motion.div className="flex justify-between items-center w-full flex-col-reverse mt-4">
               {!restoredImage && status == "authenticated" && (
                 <>
                   <div className="space-y-4 w-full max-w-sm">
@@ -116,13 +153,51 @@ export default function DreamPage() {
                         Choose your room theme.
                       </p>
                     </div>
-                    <DropDown
-                      theme={theme}
-                      setTheme={(newTheme) =>
-                        setTheme(newTheme as typeof theme)
-                      }
-                      themes={themes}
-                    />
+                    <div className="grid grid-cols-3 grid-rows-3 gap-2 mb-6">
+                      {themes.map((theme) => (
+                        <div className="flex flex-col space-y-2 items-center">
+                          <button
+                            className="disabled:cursor-not-allowed"
+                            onClick={() => toggleSelectRoom(theme)}
+                          >
+                            <div className="relative">
+                              {selectedRooms.includes(theme) && (
+                                <div className="absolute bg-black rounded-md right-1 top-1">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    className="feather feather-check"
+                                  >
+                                    <path d="M20 6L9 17 4 12"></path>
+                                  </svg>
+                                </div>
+                              )}
+                              <img
+                                alt=""
+                                loading="lazy"
+                                width="100"
+                                height="100"
+                                decoding="async"
+                                data-nimg="1"
+                                className={`w-24 h-24 rounded-md ${
+                                  selectedRooms.includes(theme) &&
+                                  "border-2 border-white -p-2"
+                                }`}
+                                src={`/${theme.toLocaleLowerCase()}-room.webp`}
+                              />
+                            </div>
+                          </button>
+                          <div className="text-sm pb-2"> {theme} </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                   <div className="space-y-4 w-full max-w-sm">
                     <div className="flex mt-10 items-center space-x-3">
@@ -151,7 +226,7 @@ export default function DreamPage() {
                         alt="1 icon"
                       />
                       <p className="text-left font-medium">
-                        Upload a picture of your room.
+                        Upload a photo of your room.
                       </p>
                     </div>
                   </div>
@@ -184,7 +259,7 @@ export default function DreamPage() {
                 <UploadDropZone />
               )}
               {status === "unauthenticated" && !originalPhoto && (
-                <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px] -mt-8">
+                <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px]">
                   <div className="max-w-xl text-gray-600">
                     Sign in below with Google to create a free account and
                     restore your photos today. You will be able to restore 5
@@ -224,19 +299,6 @@ export default function DreamPage() {
                       width={475}
                       height={475}
                     />
-                  </div>
-                  <div className="sm:mt-0 mt-8">
-                    <h2 className="mb-1 font-medium text-lg">Generated Room</h2>
-                    <a href={restoredImage} target="_blank" rel="noreferrer">
-                      <Image
-                        alt="restored photo"
-                        src={restoredImage}
-                        className="rounded-2xl relative sm:mt-0 mt-2 cursor-zoom-in w-full h-96"
-                        width={475}
-                        height={475}
-                        onLoadingComplete={() => setRestoredLoaded(true)}
-                      />
-                    </a>
                   </div>
                 </div>
               )}
