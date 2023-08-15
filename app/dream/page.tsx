@@ -100,7 +100,7 @@ export default function DreamPage() {
         prev.filter((actualRoom) => actualRoom !== room)
       );
     } else {
-      setSetselectedRooms((prev) => [room]);
+      setSetselectedRooms([room]);
       setTheme(room);
     }
   };
