@@ -16,7 +16,7 @@ export default function HomePage() {
           className="border border-gray-700 rounded-lg py-2 px-4 text-gray-400 text-sm mb-5 transition duration-300 ease-in-out"
         >
           Used by over
-          <span className="text-[#FFCF45]">1 million</span>home design
+          <span className="text-[#FFCF45]"> 1 million </span>home design
           enthusiasts
         </a>
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-gray-300 sm:text-7xl">
@@ -32,7 +32,7 @@ export default function HomePage() {
           themes. 100% free – remodel your room today.
         </h2>
         <Link
-          className="bg-[#FFCF45] rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-[#FFCF45] transition"
+          className="bg-[#FFCF45] rounded-xl text-black font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-[#FFCF45] transition"
           href="/dream"
         >
           Generate your dream room

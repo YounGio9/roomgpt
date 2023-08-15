@@ -17,3 +17,9 @@
     pointer-events: none;
   }
 }
+
+.btn.btn--file.btn--primary.btn--upload {
+  background-color: #ffcf45 !important;
+  border: #ffcf45;
+  color: black !important;
+}

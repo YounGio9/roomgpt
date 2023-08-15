@@ -62,7 +62,7 @@ export default function DreamPage() {
         if (file.length !== 0) {
           setPhotoName(file[0].originalFile.originalFileName);
           setOriginalPhoto(file[0].fileUrl.replace("raw", "thumbnail"));
-          generatePhoto(file[0].fileUrl.replace("raw", "thumbnail"));
+          // generatePhoto(file[0].fileUrl.replace("raw", "thumbnail"));
         }
       }}
       width="670px"
@@ -140,12 +140,32 @@ export default function DreamPage() {
         <ResizablePanel>
           <AnimatePresence mode="wait">
             <motion.div className="flex justify-between items-center w-full flex-col-reverse mt-4">
+              <div className="flex space-x-2 justify-center">
+                {
+                  <div className="flex items-center justify-between gap-6 my-6">
+                    <button
+                      onClick={() => {
+                        downloadPhoto(
+                          restoredImage!,
+                          appendNewToName(photoName!)
+                        );
+                      }}
+                      className="rounded-lg bg-[#FFCF45] text-black font-medium px-4 py-2 hover:bg-gray-100 transition"
+                    >
+                      Render design
+                    </button>
+                    <span>
+                      Cost: <strong>O crédit</strong>{" "}
+                    </span>
+                  </div>
+                }
+              </div>
               {!restoredImage && status == "authenticated" && (
                 <>
                   <div className="space-y-4 w-full max-w-sm">
                     <div className="flex mt-3 items-center space-x-3">
                       <Image
-                        src="/number-1-white.svg"
+                        src="/number-3-white.svg"
                         width={30}
                         height={30}
                         alt="1 icon"
@@ -154,7 +174,7 @@ export default function DreamPage() {
                         Choose your room theme.
                       </p>
                     </div>
-                    <div className="grid grid-cols-3 grid-rows-3 gap-2 mb-6">
+                    <div className="grid grid-cols-3 grid-rows-2 gap-2 mb-6">
                       {themes.map((theme) => (
                         <div className="flex flex-col space-y-2 items-center">
                           <button
@@ -218,19 +238,6 @@ export default function DreamPage() {
                       themes={rooms}
                     />
                   </div>
-                  <div className="mt-4 w-full max-w-sm">
-                    <div className="flex mt-6 w-96 items-center space-x-3">
-                      <Image
-                        src="/number-3-white.svg"
-                        width={30}
-                        height={30}
-                        alt="1 icon"
-                      />
-                      <p className="text-left font-medium">
-                        Upload a photo of your room.
-                      </p>
-                    </div>
-                  </div>
                 </>
               )}
               {restoredImage && (
@@ -256,9 +263,26 @@ export default function DreamPage() {
                   restored={restoredImage!}
                 />
               )}
+
               {status === "authenticated" && !originalPhoto && (
-                <UploadDropZone />
+                <>
+                  <UploadDropZone />
+                  <div className="mt-4 w-full max-w-sm">
+                    <div className="flex mt-6 w-96 items-center space-x-3">
+                      <Image
+                        src="/number-1-white.svg"
+                        width={30}
+                        height={30}
+                        alt="1 icon"
+                      />
+                      <p className="text-left font-medium">
+                        Upload a photo of your room.
+                      </p>
+                    </div>
+                  </div>
+                </>
               )}
+
               {status === "unauthenticated" && !originalPhoto && (
                 <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px]">
                   <div className="max-w-xl text-gray-600">
@@ -281,13 +305,43 @@ export default function DreamPage() {
                 </div>
               )}
               {originalPhoto && !restoredImage && (
-                <Image
-                  alt="original photo"
-                  src={originalPhoto}
-                  className="rounded-2xl h-96"
-                  width={475}
-                  height={475}
-                />
+                <>
+                  <div className="bg-neutral-800 p-3 rounded-xl">
+                    <div className="flex justify-between mb-2 mx-2">
+                      <div className="text-sm text-gray-400">Original Room</div>
+                      <button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          className="feather feather-trash text-[#9ca3af] hover:text-white transition"
+                        >
+                          <path d="M3 6L5 6 21 6"></path>
+                          <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <img
+                        alt="2018-04-17sans-titre-30-1024x576.jpg"
+                        loading="lazy"
+                        width="350"
+                        height="350"
+                        decoding="async"
+                        data-nimg="1"
+                        className="rounded-lg"
+                        style={{ color: "transparent" }}
+                        src={originalPhoto}
+                      />
+                    </div>
+                  </div>
+                </>
               )}
               {restoredImage && originalPhoto && !sideBySide && (
                 <div className="flex sm:space-x-4 sm:flex-row flex-col">
@@ -306,7 +360,7 @@ export default function DreamPage() {
               {loading && (
                 <button
                   disabled
-                  className="bg-[#FFCF45] rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 w-40"
+                  className="bg-[#FFCF45] rounded-full text-black font-medium px-4 pt-2 pb-3 mt-8 w-40"
                 >
                   <span className="pt-4">
                     <LoadingDots color="white" style="large" />
@@ -321,34 +375,6 @@ export default function DreamPage() {
                   <span className="block sm:inline">{error}</span>
                 </div>
               )}
-              <div className="flex space-x-2 justify-center">
-                {originalPhoto && !loading && (
-                  <button
-                    onClick={() => {
-                      setOriginalPhoto(null);
-                      setRestoredImage(null);
-                      setRestoredLoaded(false);
-                      setError(null);
-                    }}
-                    className="bg-[#FFCF45] rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-[#FFCF45]/80 transition"
-                  >
-                    Generate New Room
-                  </button>
-                )}
-                {restoredLoaded && (
-                  <button
-                    onClick={() => {
-                      downloadPhoto(
-                        restoredImage!,
-                        appendNewToName(photoName!)
-                      );
-                    }}
-                    className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
-                  >
-                    Download Generated Room
-                  </button>
-                )}
-              </div>
             </motion.div>
           </AnimatePresence>
         </ResizablePanel>
