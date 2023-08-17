@@ -62,7 +62,6 @@ export default function DreamPage() {
         if (file.length !== 0) {
           setPhotoName(file[0].originalFile.originalFileName);
           setOriginalPhoto(file[0].fileUrl.replace("raw", "thumbnail"));
-          // generatePhoto(file[0].fileUrl.replace("raw", "thumbnail"));
         }
       }}
       width="670px"
@@ -141,16 +140,18 @@ export default function DreamPage() {
           <AnimatePresence mode="wait">
             <motion.div className="flex justify-between items-center w-full flex-col-reverse mt-4">
               <div className="flex space-x-2 justify-center">
-                {
+                {!loading && status == "authenticated" && (
                   <div className="flex items-center justify-between gap-6 my-6">
                     <button
                       onClick={() => {
-                        downloadPhoto(
-                          restoredImage!,
-                          appendNewToName(photoName!)
-                        );
+                        if (originalPhoto) generatePhoto(originalPhoto);
+
+                        // downloadPhoto(
+                        //   restoredImage!,
+                        //   appendNewToName(photoName!)
+                        // );
                       }}
-                      className="rounded-lg bg-[#FFCF45] text-black font-medium px-4 py-2 hover:bg-gray-100 transition"
+                      className="rounded-lg bg-[#FFCF45] text-black font-medium px-4 py-2 hover:opacity-75 transition"
                     >
                       Render design
                     </button>
@@ -158,7 +159,17 @@ export default function DreamPage() {
                       Cost: <strong>O crédit</strong>{" "}
                     </span>
                   </div>
-                }
+                )}
+                {loading && (
+                  <button
+                    disabled
+                    className="bg-[#FFCF45] rounded-full text-black font-medium px-4 pt-2 pb-3 mt-8 w-40"
+                  >
+                    <span className="pt-4">
+                      <LoadingDots color="white" style="large" />
+                    </span>
+                  </button>
+                )}
               </div>
               {!restoredImage && status == "authenticated" && (
                 <>
@@ -357,16 +368,7 @@ export default function DreamPage() {
                   </div>
                 </div>
               )}
-              {loading && (
-                <button
-                  disabled
-                  className="bg-[#FFCF45] rounded-full text-black font-medium px-4 pt-2 pb-3 mt-8 w-40"
-                >
-                  <span className="pt-4">
-                    <LoadingDots color="white" style="large" />
-                  </span>
-                </button>
-              )}
+
               {error && (
                 <div
                   className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8"
