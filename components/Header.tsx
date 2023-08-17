@@ -4,7 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function Header({ photo }: { photo?: string }) {
+export default function Header({
+  photo,
+  fullName,
+  email,
+}: {
+  photo?: string;
+  fullName?: string;
+  email?: string;
+}) {
   const [isActiveMenu, setIsActiveMenu] = React.useState<boolean>(false);
   return (
     <header className="flex relative flex-col xs:flex-row justify-between items-center w-full mt-3 border-b pb-7 sm:px-4 px-2 border-gray-500 gap-2">
@@ -24,11 +32,9 @@ export default function Header({ photo }: { photo?: string }) {
         <div className="absolute top-14 right-2 text-black bg-white rounded-lg p-2">
           <div className="px-2 py-1.5 text-sm font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">
-                Giovani de Souza
-              </p>
+              <p className="text-sm font-medium leading-none">{fullName}</p>
               <p className="text-xs leading-none text-muted-foreground">
-                giovanidesouza999@gmail.com
+                {email}
               </p>
             </div>
           </div>

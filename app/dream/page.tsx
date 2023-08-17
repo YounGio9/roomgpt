@@ -106,7 +106,11 @@ export default function DreamPage() {
 
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
-      <Header photo={session?.user?.image || undefined} />
+      <Header
+        photo={session?.user?.image || undefined}
+        email={session?.user?.email ?? ""}
+        fullName={session?.user?.name ?? ""}
+      />
       <main
         className={`flex  ${
           sideBySide
