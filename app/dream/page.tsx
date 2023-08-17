@@ -108,11 +108,11 @@ export default function DreamPage() {
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Header photo={session?.user?.image || undefined} />
       <main
-        className={`flex ${
+        className={`flex  ${
           sideBySide
             ? "flex-col items-center"
             : status === "authenticated"
-            ? "flex-row-reverse"
+            ? "flex-col lg:flex-row-reverse"
             : "flex-col  items-center"
         }  flex-1 w-full  justify-center text-center px-4 mt-4 sm:mb-0 mb-8`}
       >
