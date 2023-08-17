@@ -109,7 +109,9 @@ export default function DreamPage() {
       <Header photo={session?.user?.image || undefined} />
       <main
         className={`flex ${
-          status === "authenticated"
+          sideBySide
+            ? "flex-col items-center"
+            : status === "authenticated"
             ? "flex-row-reverse"
             : "flex-col  items-center"
         }  flex-1 w-full  justify-center text-center px-4 mt-4 sm:mb-0 mb-8`}
@@ -140,7 +142,7 @@ export default function DreamPage() {
           <AnimatePresence mode="wait">
             <motion.div className="flex justify-between items-center w-full flex-col-reverse mt-4">
               <div className="flex space-x-2 justify-center">
-                {!loading && status == "authenticated" && (
+                {!loading && !restoredImage && status == "authenticated" && (
                   <div className="flex items-center justify-between gap-6 my-6">
                     <button
                       onClick={() => {
@@ -358,12 +360,16 @@ export default function DreamPage() {
                 <div className="flex sm:space-x-4 sm:flex-row flex-col">
                   <div>
                     <h2 className="mb-1 font-medium text-lg">Original Room</h2>
-                    <Image
-                      alt="original photo"
+                    <img
+                      alt="2018-04-17sans-titre-30-1024x576.jpg"
+                      loading="lazy"
+                      width="350"
+                      height="350"
+                      decoding="async"
+                      data-nimg="1"
+                      className="rounded-lg"
+                      style={{ color: "transparent" }}
                       src={originalPhoto}
-                      className="rounded-2xl relative w-full h-96"
-                      width={475}
-                      height={475}
                     />
                   </div>
                 </div>
