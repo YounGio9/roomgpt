@@ -322,7 +322,7 @@ export default function DreamPage() {
                   <div className="bg-neutral-800 p-3 rounded-xl">
                     <div className="flex justify-between mb-2 mx-2">
                       <div className="text-sm text-gray-400">Original Room</div>
-                      <button>
+                      <button onClick={() => setOriginalPhoto(null)}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"
