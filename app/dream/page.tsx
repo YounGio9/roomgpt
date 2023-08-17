@@ -233,7 +233,7 @@ export default function DreamPage() {
                       ))}
                     </div>
                   </div>
-                  <div className="space-y-4 w-full max-w-sm">
+                  <div className="space-y-4 w-full max-w-sm -mt-6">
                     <div className="flex mt-10 items-center space-x-3">
                       <Image
                         src="/number-2-white.svg"
